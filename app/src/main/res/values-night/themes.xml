@@ -1,7 +1,32 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+
+    <!-- App theme (keep Material3 base if you want M3 look) -->
     <style name="Base.Theme.PinPlace" parent="Theme.Material3.DayNight">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <!-- Use our action bar style (transparent background) -->
+        <item name="android:actionBarStyle">@style/TransparentActionBar</item>
+        <item name="actionBarStyle">@style/TransparentActionBar</item>
+
+        <!-- remove content overlay/shadow that may show a stripe -->
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <!-- Transparent action bar but with title text style set -->
+    <style name="TransparentActionBar" parent="@style/Widget.AppCompat.ActionBar">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="background">@android:color/transparent</item>
+
+        <item name="android:elevation">0dp</item>
+        <item name="elevation">0dp</item>
+
+        <!-- make sure title uses visible color and size -->
+        <item name="android:titleTextStyle">@style/ActionBarTitleText</item>
+        <item name="titleTextStyle">@style/ActionBarTitleText</item>
+    </style>
+
+    <!-- Title text appearance for the action bar -->
+    <style name="ActionBarTitleText" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <!-- change color to whatever contrasts with your background -->
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">18sp</item>
     </style>
 </resources>

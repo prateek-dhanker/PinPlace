@@ -1,9 +1,38 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+
+    <!-- Base application theme -->
     <style name="Base.Theme.PinPlace" parent="Theme.Material3.DayNight">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+
+        <!-- Apply custom transparent ActionBar style -->
+        <item name="actionBarStyle">@style/TransparentActionBar</item>
+        <item name="android:actionBarStyle">@style/TransparentActionBar</item>
+
+        <!-- Removes shadow under the bar -->
+        <item name="android:windowContentOverlay">@null</item>
     </style>
 
+    <!-- App theme -->
     <style name="Theme.PinPlace" parent="Base.Theme.PinPlace" />
+
+    <!-- Transparent ActionBar -->
+    <style name="TransparentActionBar" parent="@style/Widget.AppCompat.ActionBar">
+        <!-- Make background invisible -->
+        <item name="android:background">@android:color/transparent</item>
+        <item name="background">@android:color/transparent</item>
+
+        <!-- Remove elevation/shadow -->
+        <item name="android:elevation">0dp</item>
+        <item name="elevation">0dp</item>
+
+        <!-- Keep title visible -->
+        <item name="android:titleTextStyle">@style/ActionBarTitleText</item>
+        <item name="titleTextStyle">@style/ActionBarTitleText</item>
+    </style>
+
+    <!-- Visible ActionBar title text -->
+    <style name="ActionBarTitleText" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@android:color/white</item>  <!-- change if bg is light -->
+        <item name="android:textSize">20sp</item>
+    </style>
+
 </resources>
