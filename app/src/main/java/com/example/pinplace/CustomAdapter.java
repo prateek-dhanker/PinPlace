@@ -8,9 +8,11 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder> {
 
-    private Location[] savedLocations;
+    private ArrayList<Location> savedLocations = new ArrayList<Location>();
 
     /**
      * Provide a reference to the type of views that you are using
@@ -35,7 +37,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
      * @param dataSet String[] containing the data to populate views to be used
      * by RecyclerView
      */
-    public CustomAdapter(Location[] dataSet) {
+    public CustomAdapter(ArrayList<Location> dataSet) {
         savedLocations = dataSet;
     }
 
@@ -62,14 +64,14 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
 
         viewHolder.image.setBackgroundColor(Color.parseColor(colorCode));
 
-        viewHolder.image.setText(savedLocations[position].getName().substring(0,1));
-        viewHolder.description.setText(savedLocations[position].getDescription());
-        viewHolder.name.setText(savedLocations[position].getName());
+        viewHolder.image.setText(savedLocations.get(position).getName().substring(0,1));
+        viewHolder.description.setText(savedLocations.get(position).getDescription());
+        viewHolder.name.setText(savedLocations.get(position).getName());
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return savedLocations.length;
+        return savedLocations.size();
     }
 }

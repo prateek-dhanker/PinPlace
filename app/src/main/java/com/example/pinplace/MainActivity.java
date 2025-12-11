@@ -1,6 +1,7 @@
 package com.example.pinplace;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.graphics.Insets;
@@ -18,16 +20,18 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.CancellationTokenSource;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     public RecyclerView recyclerView;
-
-    Location l1 = new Location(12,12,"Home","Keshav sir home");
-    Location l2 = new Location(118,118,"School", "Keshav sir ka school");
-    private Location[] allLocations = {l1,l2};
+    private CustomAdapter customAdapter;
+    private ArrayList<Location> allLocations = new ArrayList<Location>();
+    {allLocations.add(new Location(12,12,"Name","Desc"));}
     public void onGetLocationClicked(View view) {
-        Toast.makeText(MainActivity.this, "Saved location", Toast.LENGTH_SHORT).show();
         fetchCurrentLocation(this);
     }
     private void fetchCurrentLocation(Context context) {
@@ -50,15 +54,17 @@ public class MainActivity extends AppCompatActivity {
         fusedLocationClient.getLastLocation()
                 .addOnSuccessListener(location -> {
                     if (location != null) {
-                        Log.d("LocationInfo",
-                                "Lat: " + location.getLatitude() +
-                                        ", Lng: " + location.getLongitude());
+                        double latitude = location.getLatitude();
+                        double longitude = location.getLongitude();
+                        allLocations.add(new Location(latitude, longitude, "New location", ""));
+                        customAdapter.notifyItemInserted(allLocations.size() - 1); // Notify adapter
+                        Toast.makeText(MainActivity.this, "Location added", Toast.LENGTH_SHORT).show();
                     } else {
-                        Log.d("LocationInfo", "Location is null");
+                        Toast.makeText(MainActivity.this, "Location is NULL", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .addOnFailureListener(e -> {
-                    Log.e("LocationInfo", "Failed to get location: " + e.getMessage());
+                    Toast.makeText(MainActivity.this, "Failed to fetch location, retry", Toast.LENGTH_SHORT).show();
                 });
     }
 
@@ -73,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        CustomAdapter customAdapter = new CustomAdapter(allLocations);
+        customAdapter = new CustomAdapter(allLocations);
 
         recyclerView = findViewById(R.id.allLocations);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
