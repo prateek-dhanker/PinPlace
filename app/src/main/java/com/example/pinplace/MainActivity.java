@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        customAdapter = new CustomAdapter(allLocations);
+        customAdapter = new CustomAdapter(this,allLocations);
 
         recyclerView = findViewById(R.id.allLocations);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

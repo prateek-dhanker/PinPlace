@@ -3,9 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:padding="4dp">
 
     <LinearLayout
+        android:id="@+id/locationCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="2dp"
@@ -17,7 +19,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="@drawable/border_with_ripple" >
 
         <TextView
             android:id="@+id/image"
@@ -28,27 +33,31 @@
             android:background="#E6BFBF"
             android:ems="10"
             android:gravity="center"
-            android:inputType="text"
             android:padding="10dp"
             android:text=""
             android:textSize="20dp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:clickable="false"
+            android:focusable="false" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:clickable="false"
+            android:focusable="false" >
 
             <TextView
                 android:id="@+id/name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:ems="10"
-                android:inputType="text"
-                android:text="" />
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:clickable="false"
+                android:focusable="false" />
 
             <TextView
                 android:id="@+id/description"
@@ -56,8 +65,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:ems="10"
-                android:inputType="text"
-                android:text="" />
+                android:text=""
+                android:clickable="false"
+                android:focusable="false"/>
         </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

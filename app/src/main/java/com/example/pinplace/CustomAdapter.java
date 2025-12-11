@@ -1,9 +1,12 @@
 package com.example.pinplace;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,6 +16,7 @@ import java.util.ArrayList;
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder> {
 
     private ArrayList<Location> savedLocations = new ArrayList<Location>();
+    private Context context;
 
     /**
      * Provide a reference to the type of views that you are using
@@ -20,6 +24,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
      */
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public final TextView image,name,description;
+        public final LinearLayout locationCard;
 
         public ViewHolder(View view) {
             super(view);
@@ -28,6 +33,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
             image = (TextView) view.findViewById(R.id.image);
             name = (TextView) view.findViewById(R.id.name);
             description = (TextView) view.findViewById(R.id.description);
+            locationCard = (LinearLayout) view.findViewById(R.id.locationCard);
         }
     }
 
@@ -37,8 +43,9 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
      * @param dataSet String[] containing the data to populate views to be used
      * by RecyclerView
      */
-    public CustomAdapter(ArrayList<Location> dataSet) {
+    public CustomAdapter(Context context,ArrayList<Location> dataSet) {
         savedLocations = dataSet;
+        this.context = context;
     }
 
     // Create new views (invoked by the layout manager)
@@ -54,9 +61,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-
-        // Get element from your dataset at this position and replace the
-        // contents of the view with that element
+        Location location = savedLocations.get(position);
         String colorCode = String.format("#%02X%02X%02X",
                 (int)(Math.random()*128),
                 (int)(Math.random()*128),
@@ -64,9 +69,18 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
 
         viewHolder.image.setBackgroundColor(Color.parseColor(colorCode));
 
-        viewHolder.image.setText(savedLocations.get(position).getName().substring(0,1));
-        viewHolder.description.setText(savedLocations.get(position).getDescription());
-        viewHolder.name.setText(savedLocations.get(position).getName());
+        viewHolder.image.setText(location.getName().substring(0,1));
+        viewHolder.description.setText(location.getDescription());
+        viewHolder.name.setText(location.getName());
+
+        viewHolder.locationCard.setOnClickListener(view ->{
+            Intent it = new Intent(context, LocationActivity.class);
+            it.putExtra("latitude", location.getLatitude());
+            it.putExtra("longitude",location.getLongitude());
+            it.putExtra("name",location.getName());
+            it.putExtra("description",location.getDescription());
+            context.startActivity(it);
+        });
     }
 
     // Return the size of your dataset (invoked by the layout manager)
