@@ -34,6 +34,30 @@ public class MainActivity extends AppCompatActivity {
     public void onGetLocationClicked(View view) {
         fetchCurrentLocation(this);
     }
+    public void openNameDescriptionModal(double latitude, double longitude) {
+        android.view.LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog_add_location, null);
+        android.widget.EditText nameInput = dialogView.findViewById(R.id.editTextName);
+        android.widget.EditText descInput = dialogView.findViewById(R.id.editTextDescription);
+
+        new androidx.appcompat.app.AlertDialog.Builder(this)
+                .setTitle("Add Location")
+                .setView(dialogView)
+                .setPositiveButton("Add", (dialog, which) -> {
+                    String name = nameInput.getText().toString().trim();
+                    String description = descInput.getText().toString().trim();
+
+                    if (name.isEmpty()) {
+                        name = "New location";
+                    }
+
+                    allLocations.add(new Location(latitude, longitude, name, description));
+                    customAdapter.notifyItemInserted(allLocations.size() - 1); // Notify adapter
+                    Toast.makeText(MainActivity.this, "Location added", Toast.LENGTH_SHORT).show();
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
+    }
     private void fetchCurrentLocation(Context context) {
 
         FusedLocationProviderClient fusedLocationClient =
@@ -56,9 +80,7 @@ public class MainActivity extends AppCompatActivity {
                     if (location != null) {
                         double latitude = location.getLatitude();
                         double longitude = location.getLongitude();
-                        allLocations.add(new Location(latitude, longitude, "New location", ""));
-                        customAdapter.notifyItemInserted(allLocations.size() - 1); // Notify adapter
-                        Toast.makeText(MainActivity.this, "Location added", Toast.LENGTH_SHORT).show();
+                        openNameDescriptionModal(latitude, longitude);
                     } else {
                         Toast.makeText(MainActivity.this, "Location is NULL", Toast.LENGTH_SHORT).show();
                     }
@@ -66,6 +88,19 @@ public class MainActivity extends AppCompatActivity {
                 .addOnFailureListener(e -> {
                     Toast.makeText(MainActivity.this, "Failed to fetch location, retry", Toast.LENGTH_SHORT).show();
                 });
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == 1001) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission granted → call location function again
+                fetchCurrentLocation(this);
+            } else {
+                Toast.makeText(MainActivity.this, "Location Permission Denied", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     @Override
