@@ -1,23 +1,34 @@
 package com.example.pinplace;
 
-public class Location {
-    private double latitude, longitude;
-    private String name, description;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
-    Location(double latitude, double longitude){
-        this.latitude = latitude;
-        this.longitude = longitude;
-    }
-    Location(double latitude, double longitude,String name){
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.name = name;
-    }
+@Entity(tableName = "locations")
+public class Location {
+    @PrimaryKey(autoGenerate = true)
+    private int id;
+
+    @ColumnInfo(name = "latitude")
+    private double latitude;
+    @ColumnInfo(name = "longitude")
+    private double longitude;
+    @ColumnInfo(name = "name")
+    private String name;
+    @ColumnInfo(name = "description")
+    private String description;
+
     Location(double latitude, double longitude,String name, String description){
         this.latitude = latitude;
         this.longitude = longitude;
         this.name = name;
         this.description = description;
+    }
+    public int getId(){
+        return this.id;
+    }
+    public void setId(int id){
+        this.id = id;
     }
     public double getLatitude() {
         return latitude;

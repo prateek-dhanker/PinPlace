@@ -16,6 +16,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,12 +26,13 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.CancellationTokenSource;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     public RecyclerView recyclerView;
     private CustomAdapter customAdapter;
-    private ArrayList<Location> allLocations = new ArrayList<Location>();
-    {allLocations.add(new Location(12,12,"Name","Desc"));}
+    private List<Location> allLocations = new ArrayList<Location>();
+    private LocationViewModel locationViewModel;
     public void onGetLocationClicked(View view) {
         fetchCurrentLocation(this);
     }
@@ -51,8 +53,8 @@ public class MainActivity extends AppCompatActivity {
                         name = "New location";
                     }
 
-                    allLocations.add(new Location(latitude, longitude, name, description));
-                    customAdapter.notifyItemInserted(allLocations.size() - 1); // Notify adapter
+                    Location newLocation = new Location(latitude, longitude, name, description);
+                    locationViewModel.insert(newLocation);
                     Toast.makeText(MainActivity.this, "Location added", Toast.LENGTH_SHORT).show();
                 })
                 .setNegativeButton("Cancel", null)
@@ -112,6 +114,13 @@ public class MainActivity extends AppCompatActivity {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+        });
+
+        locationViewModel = new ViewModelProvider(this).get(LocationViewModel.class);
+        locationViewModel.getAllLocations().observe(this, locations -> {
+            allLocations.clear();
+            allLocations.addAll(locations);
+            customAdapter.notifyDataSetChanged();
         });
 
         customAdapter = new CustomAdapter(this,allLocations);

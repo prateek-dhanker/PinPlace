@@ -43,4 +43,15 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     implementation("com.google.android.gms:play-services-location:21.2.0")
+    val room_version = "2.6.1"
+
+    implementation("androidx.room:room-runtime:$room_version")
+    annotationProcessor("androidx.room:room-compiler:$room_version")
+
+    // For RxJava support (optional)
+    implementation("androidx.room:room-rxjava2:$room_version")
+
+    // For lifecycle components
+    implementation("androidx.lifecycle:lifecycle-viewmodel:$room_version")
+    implementation("androidx.lifecycle:lifecycle-livedata:$room_version")
 }

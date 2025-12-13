@@ -12,10 +12,11 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder> {
 
-    private ArrayList<Location> savedLocations = new ArrayList<Location>();
+    private List<Location> savedLocations = new ArrayList<Location>();
     private Context context;
 
     /**
@@ -43,7 +44,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
      * @param dataSet String[] containing the data to populate views to be used
      * by RecyclerView
      */
-    public CustomAdapter(Context context,ArrayList<Location> dataSet) {
+    public CustomAdapter(Context context, List<Location> dataSet) {
         savedLocations = dataSet;
         this.context = context;
     }
