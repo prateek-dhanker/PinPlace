@@ -88,14 +88,6 @@
                 android:textColor="#FFFFFF"
                 android:layout_marginTop="8dp" />
 
-            <TextView
-                android:id="@+id/tvTimestamp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Saved Dec 10, 2025 · 8:23 PM"
-                android:textColor="#FFFFFF"
-                android:layout_marginTop="4dp"/>
-
         </LinearLayout>
 
         <!-- Chips/tags -->
@@ -137,19 +129,21 @@
             android:id="@+id/btnEdit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Edit"
-            app:layout_constraintTop_toBottomOf="@id/tvNotes"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btnDelete"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
-            android:onClick="editLocation" />
+            android:onClick="editLocation"
+            android:text="Edit"
+            app:backgroundTint="@color/blue_button"
+            app:layout_constraintEnd_toStartOf="@+id/btnDelete"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvNotes" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnDelete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Delete"
+            app:backgroundTint="@color/blue_button"
             app:layout_constraintTop_toTopOf="@id/btnEdit"
             app:layout_constraintEnd_toEndOf="parent"
             android:onClick="deleteLocation" />
