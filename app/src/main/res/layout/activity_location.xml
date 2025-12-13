@@ -142,7 +142,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btnDelete"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp" />
+            android:layout_marginEnd="8dp"
+            android:onClick="editLocation" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnDelete"

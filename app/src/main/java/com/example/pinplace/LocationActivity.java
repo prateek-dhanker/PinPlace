@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -80,10 +81,28 @@ public class LocationActivity extends AppCompatActivity {
                 .setMessage("Are you sure you want to delete '" + location.getName() + "'?")
                 .setPositiveButton("Delete", (dialog, which) -> {
                     locationViewModel.delete(location);
+                    Toast.makeText(this, "Location deleted", Toast.LENGTH_SHORT).show();
                     finish();
                 })
                 .setNegativeButton("Cancel", null)
                 .show();
+    }
+
+    private void updateUI(Location updatedLocation){
+        tvDesc.setText(updatedLocation.getDescription());
+        tvName.setText(updatedLocation.getName());
+    }
+    public void editLocation(View view) {
+        EditLocationBottomSheet bottomSheet = EditLocationBottomSheet.newInstance(
+                location,
+                updatedLocation -> {
+                    // Update in database
+                    locationViewModel.update(updatedLocation);
+                    updateUI(updatedLocation);
+                    Toast.makeText(this, "Location updated", Toast.LENGTH_SHORT).show();
+                }
+        );
+        bottomSheet.show(getSupportFragmentManager(), "EditLocationBottomSheet");
     }
 
 }
