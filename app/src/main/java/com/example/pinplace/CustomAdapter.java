@@ -76,10 +76,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
 
         viewHolder.locationCard.setOnClickListener(view ->{
             Intent it = new Intent(context, LocationActivity.class);
-            it.putExtra("latitude", location.getLatitude());
-            it.putExtra("longitude",location.getLongitude());
-            it.putExtra("name",location.getName());
-            it.putExtra("description",location.getDescription());
+            it.putExtra("location", location);
             context.startActivity(it);
         });
     }

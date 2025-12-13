@@ -12,9 +12,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.lifecycle.ViewModelProvider;
+
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 public class LocationActivity extends AppCompatActivity {
+    private LocationViewModel locationViewModel;
     public TextView tvDesc, tvName, tvLat, tvLng;
+    Location location;
     Double latitude, longitude;
     String name, description;
 
@@ -28,16 +33,19 @@ public class LocationActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        locationViewModel = new ViewModelProvider(this).get(LocationViewModel.class);
+
         tvDesc = findViewById(R.id.tvDesc);
         tvName = findViewById(R.id.tvName);
         tvLat = findViewById(R.id.tvLat);
         tvLng = findViewById(R.id.tvLng);
 
         Intent intent = getIntent();
-        latitude = intent.getDoubleExtra("latitude", 0.00);
-        longitude = intent.getDoubleExtra("longitude", 0.00);
-        name = intent.getStringExtra("name");
-        description = intent.getStringExtra("description");
+        location = (Location) intent.getSerializableExtra("location");
+        latitude = location.getLatitude();
+        longitude = location.getLongitude();
+        name = location.getName();
+        description = location.getDescription();
 
         tvDesc.setText(description);
         tvName.setText(name);
@@ -64,6 +72,18 @@ public class LocationActivity extends AppCompatActivity {
     }
     public void onClickMaps(View view){
         openInGoogleMapsView(this, latitude, longitude, name);
+    }
+
+    public void deleteLocation(View view){
+        new MaterialAlertDialogBuilder(this)
+                .setTitle("Delete Location")
+                .setMessage("Are you sure you want to delete '" + location.getName() + "'?")
+                .setPositiveButton("Delete", (dialog, which) -> {
+                    locationViewModel.delete(location);
+                    finish();
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
     }
 
 }

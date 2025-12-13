@@ -150,7 +150,8 @@
             android:layout_height="wrap_content"
             android:text="Delete"
             app:layout_constraintTop_toTopOf="@id/btnEdit"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            android:onClick="deleteLocation" />
 
         <ImageView
             android:id="@+id/googleImg"
