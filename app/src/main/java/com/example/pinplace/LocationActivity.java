@@ -2,6 +2,7 @@ package com.example.pinplace;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -17,12 +18,14 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
+import java.util.Objects;
+
 public class LocationActivity extends AppCompatActivity {
     private LocationViewModel locationViewModel;
-    public TextView tvDesc, tvName, tvLat, tvLng;
+    public TextView tvDesc, tvName, tvLat, tvLng, tvAddress;
     Location location;
     Double latitude, longitude;
-    String name, description;
+    String name, description, address;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +41,7 @@ public class LocationActivity extends AppCompatActivity {
 
         tvDesc = findViewById(R.id.tvDesc);
         tvName = findViewById(R.id.tvName);
+        tvAddress = findViewById(R.id.tvAddress);
         tvLat = findViewById(R.id.tvLat);
         tvLng = findViewById(R.id.tvLng);
 
@@ -46,13 +50,26 @@ public class LocationActivity extends AppCompatActivity {
         latitude = location.getLatitude();
         longitude = location.getLongitude();
         name = location.getName();
-        description = location.getDescription();
+
+        boolean emptyDesc = Objects.equals(location.getDescription(), "");
+        boolean emptyAddress = Objects.equals(location.getAddress(), "");
+        description = emptyDesc ? "Add description" : location.getDescription();
+        address = emptyAddress ? "Add address" : location.getAddress();
 
         tvDesc.setText(description);
         tvName.setText(name);
         tvLat.setText("Latitude: " + latitude.toString());
         tvLng.setText("Longitude: " + longitude.toString());
+        tvAddress.setText(address);
 
+        if(emptyDesc)
+            tvDesc.setTextColor(Color.GRAY);
+        else
+            tvDesc.setTextColor(Color.WHITE);
+        if(emptyAddress)
+            tvAddress.setTextColor(Color.GRAY);
+        else
+            tvDesc.setTextColor(Color.WHITE);
     }
     private void openInGoogleMapsView(Context context, double latitude, double longitude, String label) {
         String uriString = "geo:" + latitude + "," + longitude + "?q="
@@ -89,8 +106,26 @@ public class LocationActivity extends AppCompatActivity {
     }
 
     private void updateUI(Location updatedLocation){
-        tvDesc.setText(updatedLocation.getDescription());
-        tvName.setText(updatedLocation.getName());
+        String name = updatedLocation.getName();
+
+        boolean emptyDesc = Objects.equals(updatedLocation.getDescription(), "");
+        boolean emptyAddress = Objects.equals(updatedLocation.getAddress(), "");
+
+        String description = emptyDesc ? "Add description" : updatedLocation.getDescription();
+        String address = emptyAddress ? "Add address" : updatedLocation.getAddress();
+
+        tvDesc.setText(description);
+        tvName.setText(name);
+        tvAddress.setText(address);
+
+        if(emptyDesc)
+            tvDesc.setTextColor(Color.GRAY);
+        else
+            tvDesc.setTextColor(Color.WHITE);
+        if(emptyAddress)
+            tvAddress.setTextColor(Color.GRAY);
+        else
+            tvAddress.setTextColor(Color.WHITE);
     }
     public void editLocation(View view) {
         EditLocationBottomSheet bottomSheet = EditLocationBottomSheet.newInstance(
@@ -98,6 +133,7 @@ public class LocationActivity extends AppCompatActivity {
                 updatedLocation -> {
                     // Update in database
                     locationViewModel.update(updatedLocation);
+                    location = updatedLocation;
                     updateUI(updatedLocation);
                     Toast.makeText(this, "Location updated", Toast.LENGTH_SHORT).show();
                 }

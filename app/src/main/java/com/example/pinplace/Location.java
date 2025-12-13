@@ -19,12 +19,15 @@ public class Location implements Serializable {
     private String name;
     @ColumnInfo(name = "description")
     private String description;
+    @ColumnInfo(name = "address")
+    private String address;
 
-    Location(double latitude, double longitude,String name, String description){
+    Location(double latitude, double longitude, String name, String description, String address){
         this.latitude = latitude;
         this.longitude = longitude;
         this.name = name;
         this.description = description;
+        this.address = address;
     }
     public int getId(){
         return this.id;
@@ -55,5 +58,13 @@ public class Location implements Serializable {
     }
     public void setDescription(String description){
         this.description = description;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

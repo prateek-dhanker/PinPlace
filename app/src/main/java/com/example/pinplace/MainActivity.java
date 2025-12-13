@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         View dialogView = inflater.inflate(R.layout.dialog_add_location, null);
         android.widget.EditText nameInput = dialogView.findViewById(R.id.editTextName);
         android.widget.EditText descInput = dialogView.findViewById(R.id.editTextDescription);
+        android.widget.EditText addressInput = dialogView.findViewById(R.id.editTextAddress);
 
         new androidx.appcompat.app.AlertDialog.Builder(this)
                 .setTitle("Add Location")
@@ -48,12 +49,13 @@ public class MainActivity extends AppCompatActivity {
                 .setPositiveButton("Add", (dialog, which) -> {
                     String name = nameInput.getText().toString().trim();
                     String description = descInput.getText().toString().trim();
+                    String address = addressInput.getText().toString().trim();
 
                     if (name.isEmpty()) {
                         name = "New location";
                     }
 
-                    Location newLocation = new Location(latitude, longitude, name, description);
+                    Location newLocation = new Location(latitude, longitude, name, description,address);
                     locationViewModel.insert(newLocation);
                     Toast.makeText(MainActivity.this, "Location added", Toast.LENGTH_SHORT).show();
                 })
