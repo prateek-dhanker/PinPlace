@@ -89,40 +89,6 @@
 
         </LinearLayout>
 
-        <!-- Chips/tags -->
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/chipGroup"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/infoGrid"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="12dp" />
-
-        <!-- Notes -->
-        <TextView
-            android:id="@+id/tvNotesLabel"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Notes"
-            android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@id/chipGroup"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:textColor="#FFFFFF"
-            android:layout_marginTop="12dp"/>
-
-        <TextView
-            android:id="@+id/tvNotes"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Longer user notes go here..."
-            app:layout_constraintTop_toBottomOf="@id/tvNotesLabel"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:textColor="#FFFFFF"
-            android:layout_marginTop="6dp"/>
-
         <!-- Action buttons -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnEdit"
@@ -136,7 +102,7 @@
             android:textColor="@color/white"
             app:layout_constraintEnd_toStartOf="@+id/btnDelete"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvNotes" />
+            app:layout_constraintTop_toBottomOf="@id/infoGrid" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnDelete"
@@ -162,6 +128,7 @@
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
             app:srcCompat="@drawable/google_maps"
+            android:contentDescription="Look on maps"
             android:onClick="onClickMaps" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
