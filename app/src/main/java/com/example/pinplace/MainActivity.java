@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -118,11 +119,18 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
+        ImageView emptyState = findViewById(R.id.empty_state);
+
         locationViewModel = new ViewModelProvider(this).get(LocationViewModel.class);
         locationViewModel.getAllLocations().observe(this, locations -> {
             allLocations.clear();
             allLocations.addAll(locations);
             customAdapter.notifyDataSetChanged();
+
+            if(allLocations.isEmpty())
+                emptyState.setVisibility(View.VISIBLE);
+            else
+                emptyState.setVisibility((View.GONE));
         });
 
         customAdapter = new CustomAdapter(this,allLocations);
