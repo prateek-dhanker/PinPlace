@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
                         double longitude = location.getLongitude();
                         openNameDescriptionModal(latitude, longitude);
                     } else {
-                        Toast.makeText(MainActivity.this, "Location is NULL", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "Turn  on location or try again", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .addOnFailureListener(e -> {

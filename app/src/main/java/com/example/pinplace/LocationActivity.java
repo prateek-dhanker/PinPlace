@@ -91,6 +91,28 @@ public class LocationActivity extends AppCompatActivity {
     public void onClickMaps(View view){
         openInGoogleMapsView(this, latitude, longitude, name);
     }
+    public void shareLocation(View view) {
+        // Create the location text to share with PinPlace branding
+        String shareText = "📍 Shared from PinPlace\n\n" +
+                "Location: " + location.getName() + "\n" +
+                "Coordinates: " + location.getLatitude() + ", " + location.getLatitude() + "\n\n" +
+                "View on map: https://maps.google.com/?q=" + location.getLatitude() + "," + location.getLongitude() + "&label=" + location.getName() + "\n\n" +
+                "Get PinPlace to save and share your favorite locations!";
+
+        // Create share intent
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("text/plain");
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Location from PinPlace");
+        shareIntent.putExtra(Intent.EXTRA_TEXT, shareText);
+
+        // Create chooser to let user select app
+        Intent chooser = Intent.createChooser(shareIntent, "Share location via");
+
+        // Verify that the intent will resolve to an activity
+        if (shareIntent.resolveActivity(getPackageManager()) != null) {
+            startActivity(chooser);
+        }
+    }
 
     public void deleteLocation(View view){
         new MaterialAlertDialogBuilder(this)

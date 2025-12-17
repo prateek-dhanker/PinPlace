@@ -131,6 +131,20 @@
             android:contentDescription="Look on maps"
             android:onClick="onClickMaps" />
 
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnEdit"
+            app:layout_constraintHorizontal_bias="0.9"
+            app:layout_constraintStart_toEndOf="@+id/googleImg"
+            app:layout_constraintVertical_bias="0.148"
+            app:srcCompat="@android:drawable/ic_menu_share"
+            tools:layout_editor_absoluteY="304dp"
+            android:onClick="shareLocation" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
